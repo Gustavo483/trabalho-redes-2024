@@ -4,17 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Group extends Model
 {
-    use HasFactory;
+    use HasFactory , Notifiable;
 
     protected $table = 'tb_group';
 
     protected $primaryKey = 'pk_group';
 
     protected $fillable = [
-        'st_nane',
+        'st_name',
         'fk_admin',
         'st_description',
         'bl_active',

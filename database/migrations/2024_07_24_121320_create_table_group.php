@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create((new Group())->getTable(), function (Blueprint $table) {
             $table->id('pk_group');
-            $table->string('st_nane');
+            $table->string('st_name');
             $table->string('st_description');
             $table->unsignedBigInteger('fk_user_admin');
             $table->boolean('bl_active')->default(true);
