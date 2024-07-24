@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -14,11 +15,13 @@ class SendMessageNotification extends Notification implements ShouldBroadcast
 
     public $message;
     public $group;
+    public $user;
 
-    public function __construct($message, $group)
+    public function __construct($message, $group, $user)
     {
         $this->message = $message;
         $this->group = $group;
+        $this->user = $user;
     }
 
     public function via($notifiable)
@@ -28,9 +31,17 @@ class SendMessageNotification extends Notification implements ShouldBroadcast
 
     public function toBroadcast($notifiable)
     {
+        $dataMessage = Message::create([
+            'fk_group' => $this->group->pk_group,
+            'st_message' => $this->message,
+            'int_message_type' => 1,
+            'fk_user_send_message' => $this->user
+        ]);
+
         return new BroadcastMessage([
-            'message' => $this->message,
+            'message' => $dataMessage,
             'group' => $this->group,
+            'user' => $dataMessage->userSendMessage,
         ]);
     }
 

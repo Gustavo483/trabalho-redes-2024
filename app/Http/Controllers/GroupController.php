@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MessageRequest;
 use App\Models\Group;
 use App\Models\User;
 use App\Notifications\sendMessageNotification;
@@ -20,13 +21,14 @@ class GroupController extends Controller
 
     public function show(Group $group)
     {
-
-        return view('group.showGroup', ['idGrupo' => $group->pk_group]);
+        return view('group.showGroup', ['idGrupo' => $group]);
     }
 
-    public function sendMessege(Group $group)
+    public function sendMessege(Group $group, MessageRequest $request)
     {
-        $ms = 'teste ed mensagem';
-        $group->notify(new SendMessageNotification($ms, $group));
+        $group->notify(new SendMessageNotification($request->st_message, $group, Auth::user()->id));
+
+        return redirect()->back()->with('success', 'Message sent successfully');
+
     }
 }

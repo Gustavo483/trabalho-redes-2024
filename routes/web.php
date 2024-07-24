@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(GroupController::class)->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::get('/show/{group}', 'show')->name('show');
-        Route::get('/sendMessege/{group}', 'sendMessege')->name('sendMessege');
+        Route::post('/sendMessege/{group}', 'sendMessege')->name('sendMessege');
     });
 });
 
