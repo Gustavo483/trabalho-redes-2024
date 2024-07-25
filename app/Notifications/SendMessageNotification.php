@@ -43,6 +43,7 @@ class SendMessageNotification extends Notification implements ShouldBroadcast
 
         return new BroadcastMessage([
             'name_file' => $this->message['name_file'] ?? null,
+            'file_type' => $this->message['file_type'] ?? null,
             'message' => $dataMessage,
             'group' => $this->group,
             'user' => $dataMessage->userSendMessage,

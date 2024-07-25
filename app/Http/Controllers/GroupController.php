@@ -34,17 +34,20 @@ class GroupController extends Controller
 
         $fileUrl = null;
         $fileName = null;
+        $fileType = null;
 
         if ($file) {
             $filePath = $file->store('files', 'public');
             $fileUrl = Storage::url($filePath);
             $fileName = $file->getClientOriginalName();
+            $fileType = $file->getClientMimeType();
         }
 
         $arrayMessage = [
             'st_message' => $message,
             'url_file_audio' => $fileUrl,
-            'name_file' => $fileName
+            'name_file' => $fileName,
+            'file_type' => $fileType,
         ];
 
         $group->notify(new SendMessageNotification($arrayMessage, $group, Auth::user()->id));

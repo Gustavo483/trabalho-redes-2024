@@ -56,7 +56,6 @@
 
         Echo.channel('group.' + groupId)
             .listen('.message.sent', (e) => {
-                console.log(e)
                 var chat = document.getElementById("chat");
 
                 let messageContent = '';
@@ -66,16 +65,34 @@
                 }
 
                 if (e.message.url_file_audio) {
-                    messageContent += `<div><a href="${e.message.url_file_audio}" target="_blank">Abrir arquivo : "${e.name_file}"</a></div>`;
+
+                    messageContent += `<div><a href="${e.message.url_file_audio}" target="_blank">Download File</a></div>`;
+
+                    if (e.file_type.startsWith('audio/')) {
+                        messageContent += `
+                    <div>
+                        <audio controls>
+                            <source src="${e.message.url_file_audio}" type="${e.file_type}">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>`;
+                    } else if (e.file_type.startsWith('image/')) {
+                        messageContent += `
+                    <div>
+                        <img src="${e.message.url_file_audio}" alt="${e.message.name_file}" style="width: 400px; height: 300px;">
+                    </div>`;
+                    } else {
+                        messageContent += `<div><a href="${e.message.url_file_audio}" target="_blank">Abrir arquivo: "${e.name_file}"</a></div>`;
+                    }
                 }
 
                 chat.innerHTML += `
-                <div class="p-4 mb-2 bg-gray-100 rounded-lg">
-                    <div class="flex items-center mb-2">
-                        <div class="font-bold mr-2">${e.user.name}</div>
-                    </div>
-                    ${messageContent}
-                </div>`;
+            <div class="p-4 mb-2 bg-gray-100 rounded-lg">
+                <div class="flex items-center mb-2">
+                    <div class="font-bold mr-2">${e.user.name}</div>
+                </div>
+                ${messageContent}
+            </div>`;
             });
     </script>
 </x-app-layout>
