@@ -14,11 +14,10 @@ class MessageRequest extends FormRequest
         return true;
     }
 
-
     public function rules(): array
     {
         return [
-            'st_message' => ['required']
+            'st_message' => ['required','string']
         ];
     }
 }

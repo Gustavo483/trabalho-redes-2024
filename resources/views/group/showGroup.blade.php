@@ -14,14 +14,25 @@
         </div>
     </div>
 
-    <form id="messageForm"  method="post" action="{{route('sendMessege', ['group'=>$idGrupo->pk_group])}}">
+    <form id="messageForm"  method="post" action="{{route('sendMessege', ['group'=>$idGrupo->pk_group])}}" enctype="multipart/form-data">
         @csrf
-        <div class="flex items-center">
-            <label for="messege">Messege :</label>
-            <input type="text" id="messege" name="st_message" required>
-            <button class="ps-5 border" type="submit"> enviar</button>
+        <div class="flex justify-center">
+            <div>
+                <label for="messege">Messege :</label>
+                <input class="block mt-5" type="text" id="messege" name="st_message">
+                <div>
+                    <input class="mt-5" id="inputFile" type="file" name="file" accept="image/*,audio/*">
+                </div>
+                <button class="mt-5 border" type="submit"> enviar</button>
+            </div>
         </div>
     </form>
+    @if (session('success'))
+        <div>{{ session('success') }}</div>
+        @if (session('fileUrl'))
+            <div><a href="{{ session('fileUrl') }}" target="_blank">Download File</a></div>
+        @endif
+    @endif
 
     <script type="module">
 
@@ -45,16 +56,26 @@
 
         Echo.channel('group.' + groupId)
             .listen('.message.sent', (e) => {
-                console.log('Message received:', e);
+                console.log(e)
                 var chat = document.getElementById("chat");
+
+                let messageContent = '';
+
+                if (e.message.st_message) {
+                    messageContent += `<div>${e.message.st_message}</div>`;
+                }
+
+                if (e.message.url_file_audio) {
+                    messageContent += `<div><a href="${e.message.url_file_audio}" target="_blank">Abrir arquivo : "${e.name_file}"</a></div>`;
+                }
+
                 chat.innerHTML += `
                 <div class="p-4 mb-2 bg-gray-100 rounded-lg">
                     <div class="flex items-center mb-2">
                         <div class="font-bold mr-2">${e.user.name}</div>
                     </div>
-                    <div>${e.message.st_message}</div>
-                </div>
-            `;
+                    ${messageContent}
+                </div>`;
             });
     </script>
 </x-app-layout>

@@ -18,7 +18,7 @@ class Message extends Model
     protected $fillable = [
         'fk_group',
         'st_message',
-        'int_message_type',
+        'url_file_audio',
         'fk_user_send_message'
     ];
 

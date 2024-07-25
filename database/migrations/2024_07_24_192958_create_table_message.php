@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create((new Message())->getTable(), function (Blueprint $table) {
             $table->id('pk_message');
             $table->longText('st_message');
-            $table->integer('int_message_type');
+            $table->string('url_file_audio');
             $table->unsignedBigInteger('fk_group');
             $table->unsignedBigInteger('fk_user_send_message');
             $table->timestamps();
