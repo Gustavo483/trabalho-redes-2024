@@ -14,20 +14,22 @@ class Group extends Model
 
     protected $primaryKey = 'pk_group';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'st_name',
-        'fk_admin',
+        'fk_user_admin',
         'st_description',
         'bl_active',
     ];
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'tb_grupo_user', 'grupo_id', 'user_id');
+        return $this->belongsToMany(User::class, 'grupo_user', 'grupo_id', 'user_id')->withPivot('bl_accepted')->withTimestamps();
     }
 
     public function adminUse()
     {
-        return $this->belongsTo(User::class, 'fk_admin', 'id');
+        return $this->belongsTo(User::class, 'fk_user_admin', 'id');
     }
 }

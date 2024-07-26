@@ -14,19 +14,21 @@
         </div>
     </div>
 
-    <form id="messageForm"  method="post" action="{{route('sendMessege', ['group'=>$idGrupo->pk_group])}}" enctype="multipart/form-data">
+    <form id="messageForm" method="post" action="{{ route('sendMessege', ['group' => $idGrupo->pk_group]) }}" enctype="multipart/form-data">
         @csrf
         <div class="flex justify-center">
             <div>
-                <label for="messege">Messege :</label>
+                <label for="messege">Messege:</label>
                 <input class="block mt-5" type="text" id="messege" name="st_message">
                 <div>
                     <input class="mt-5" id="inputFile" type="file" name="file" accept="image/*,audio/*">
                 </div>
-                <button class="mt-5 border" type="submit"> enviar</button>
+                <button id="sendButton" class="mt-5 border" type="submit">Enviar</button>
+                <span id="loadingIndicator" style="display: none;">Enviando...</span>
             </div>
         </div>
     </form>
+
     @if (session('success'))
         <div>{{ session('success') }}</div>
         @if (session('fileUrl'))
@@ -38,7 +40,14 @@
 
         document.getElementById('messageForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            const sendButton = document.getElementById('sendButton');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            sendButton.disabled = true;
+            loadingIndicator.style.display = 'inline';
+
             const formData = new FormData(this);
+
             try {
                 await fetch(this.action, {
                     method: 'POST',
@@ -47,12 +56,19 @@
                     },
                     body: formData,
                 });
+
+                document.getElementById('messege').value = '';
+                document.getElementById('inputFile').value = '';
+
+                sendButton.disabled = false;
+                loadingIndicator.style.display = 'none';
             } catch (error) {
-                console.error('Error sending message:', error);
+                sendButton.disabled = false;
+                loadingIndicator.style.display = 'none';
             }
         });
 
-        const groupId = {{$idGrupo->pk_group}};
+        const groupId = {{ $idGrupo->pk_group }};
 
         Echo.channel('group.' + groupId)
             .listen('.message.sent', (e) => {
@@ -65,34 +81,33 @@
                 }
 
                 if (e.message.url_file_audio) {
-
                     messageContent += `<div><a href="${e.message.url_file_audio}" target="_blank">Download File</a></div>`;
 
                     if (e.file_type.startsWith('audio/')) {
                         messageContent += `
-                    <div>
-                        <audio controls>
-                            <source src="${e.message.url_file_audio}" type="${e.file_type}">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>`;
+                <div>
+                    <audio controls>
+                        <source src="${e.message.url_file_audio}" type="${e.file_type}">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>`;
                     } else if (e.file_type.startsWith('image/')) {
                         messageContent += `
-                    <div>
-                        <img src="${e.message.url_file_audio}" alt="${e.message.name_file}" style="width: 400px; height: 300px;">
-                    </div>`;
+                <div>
+                    <img src="${e.message.url_file_audio}" alt="${e.message.name_file}" style="width: 400px; height: 300px;">
+                </div>`;
                     } else {
                         messageContent += `<div><a href="${e.message.url_file_audio}" target="_blank">Abrir arquivo: "${e.name_file}"</a></div>`;
                     }
                 }
 
                 chat.innerHTML += `
-            <div class="p-4 mb-2 bg-gray-100 rounded-lg">
-                <div class="flex items-center mb-2">
-                    <div class="font-bold mr-2">${e.user.name}</div>
-                </div>
-                ${messageContent}
-            </div>`;
+        <div class="p-4 mb-2 bg-gray-100 rounded-lg">
+            <div class="flex items-center mb-2">
+                <div class="font-bold mr-2">${e.user.name}</div>
+            </div>
+            ${messageContent}
+        </div>`;
             });
     </script>
 </x-app-layout>

@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('grupo_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained((new User)->getTable(),'id' )->onDelete('cascade');
+            $table->foreignId('user_id')->constrained((new User)->getTable(), 'id')->onDelete('cascade');
             $table->foreignId('grupo_id')->constrained((new Group())->getTable(), 'pk_group')->onDelete('cascade');
+            $table->boolean('bl_accepted')->default(false);
             $table->timestamps();
         });
     }

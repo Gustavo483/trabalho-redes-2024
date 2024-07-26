@@ -20,6 +20,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::get('/show/{group}', 'show')->name('show');
         Route::post('/sendMessege/{group}', 'sendMessege')->name('sendMessege');
+        Route::post('/newGroup/{user}', 'newGroup')->name('newGroup');
+
+        Route::get('/rejectInvitation{group}', 'rejectInvitation')->name('rejectInvitation');
+        Route::get('/acceptInvite{group}', 'acceptInvite')->name('acceptInvite');
     });
 });
 

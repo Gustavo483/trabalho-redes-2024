@@ -22,7 +22,6 @@ return new class extends Migration
 
             $table->foreign('fk_user_admin')->on((new User)->getTable())->references('id');
         });
-
     }
 
     /**
