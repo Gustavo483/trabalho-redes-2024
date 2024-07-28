@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained((new User)->getTable(), 'id')->onDelete('cascade');
             $table->foreignId('grupo_id')->constrained((new Group())->getTable(), 'pk_group')->onDelete('cascade');
             $table->boolean('bl_accepted')->default(false);
+            $table->integer('int_request_type')->default(1);
             $table->timestamps();
         });
     }

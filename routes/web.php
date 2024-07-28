@@ -24,6 +24,15 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/rejectInvitation{group}', 'rejectInvitation')->name('rejectInvitation');
         Route::get('/acceptInvite{group}', 'acceptInvite')->name('acceptInvite');
+
+        Route::get('/rejectInvitationAdmin/{group}/{user}', 'rejectInvitationAdmin')->name('rejectInvitationAdmin');
+        Route::get('/acceptInviteAdmin/{group}/{user}', 'acceptInviteAdmin')->name('acceptInviteAdmin');
+
+        Route::get('/sendRequesToGroup/{group}', 'sendRequesToGroup')->name('sendRequesToGroup');
+
+
+        Route::get('/showGroups', 'showGroups')->name('showGroups');
+
     });
 });
 

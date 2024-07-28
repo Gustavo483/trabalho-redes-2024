@@ -24,16 +24,53 @@ class GroupController extends Controller
             return $group->pivot->bl_accepted;
         });
 
+
         $invitations = $grupo->filter(function ($group) {
-            return !$group->pivot->bl_accepted;
+            return !$group->pivot->bl_accepted && $group->pivot->int_request_type === 1;
         });
+
+
+        $groupsAdmin = Group::where('fk_user_admin', Auth::user()->id)->get();
+
+        $userIdsWithRequestType2 = [];
+
+
+        foreach ($groupsAdmin as $group) {
+
+            $usersWithRequestType2 = $group->users()->wherePivot('int_request_type', 2)->wherePivot('bl_accepted',
+                0)->get();
+
+
+            if (count($usersWithRequestType2)) {
+
+                $nameUser = $usersWithRequestType2->pluck('name');
+                $idUser = $usersWithRequestType2->pluck('id');
+
+                $userIdsWithRequestType2[] = [$nameUser[0], $idUser[0], $group->st_name, $group->pk_group];
+            }
+        }
 
         return view('dashboard', [
             'groups' => $activeGroups,
             'user' => $user,
             'platformUsers' => $platformUsers,
-            'invitations' => $invitations
+            'invitations' => $invitations,
+            'groupAccessRequest' => $userIdsWithRequestType2
         ]);
+    }
+
+    public function showGroups()
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+
+        $idGroups = [];
+
+        foreach ($user->groups as $group){
+            $idGroups[]= $group->pk_group;
+        }
+
+        return view('group.showGroups',
+            ['idGroups' => $idGroups, 'user' => $user, 'groups' => Group::all(), 'users' => User::all()]);
     }
 
     public function show(Group $group)
@@ -75,8 +112,14 @@ class GroupController extends Controller
 
     public function newGroup(User $user, Request $request)
     {
+        $nameGroup = Group::where('st_name',$request->st_name)->first();
+
+        if ($nameGroup) {
+            return redirect()->back()->with('error', 'The group name is already in use.');
+        }
+
         $grupo = Group::create([
-            'st_name' => $request->st_name,
+            'st_name' => $resquestName ?? $request->st_name,
             'st_description' => $request->st_description,
             'fk_user_admin' => $user->id,
             'bl_active' => 1,
@@ -84,7 +127,7 @@ class GroupController extends Controller
 
         $userIds = $request->user_ids;
 
-        $userIds[] = $user->id;
+        $userIds[] = strval($user->id);
 
         $userSyncData = array_fill_keys($userIds, ['bl_accepted' => false]);
 
@@ -93,6 +136,17 @@ class GroupController extends Controller
         $grupo->users()->sync($userSyncData);
 
         return redirect()->back()->with('success', 'Group created and invitation sent to selected users.');
+    }
+
+    public function sendRequesToGroup(Group $group)
+    {
+        $userIds[] = Auth::user()->id;
+
+        $userSyncData = array_fill_keys($userIds, ['bl_accepted' => false, 'int_request_type' => 2]);
+
+        $group->users()->sync($userSyncData);
+
+        return redirect()->back()->with('success', 'Access request sent successfully');
     }
 
     public function rejectInvitation(Group $group)
@@ -111,6 +165,21 @@ class GroupController extends Controller
         $user->groups()->updateExistingPivot($group->pk_group, ['bl_accepted' => true]);
 
         return redirect()->route('show', ['group' => $group]);
+    }
+
+    public function rejectInvitationAdmin(Group $group, User $user)
+    {
+        $user->groups()->detach($group->pk_group);
+
+        return redirect()->back()->with('success', 'invitation successfully rejected');
+    }
+
+    public function acceptInviteAdmin(Group $group, User $user)
+    {
+
+        $user->groups()->updateExistingPivot($group->pk_group, ['bl_accepted' => true]);
+
+        return redirect()->back()->with('success', 'Invitation successfully accepted');
     }
 
 }
