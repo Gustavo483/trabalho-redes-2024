@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Message;
 use App\Models\User;
 use App\Notifications\sendMessageNotification;
 use Illuminate\Http\Request;
@@ -78,7 +79,10 @@ class GroupController extends Controller
         $user = User::where('id', Auth::user()->id)->first();
 
         if ($user->groups->contains($group->pk_group)) {
-            return view('group.showGroup', ['idGrupo' => $group]);
+
+            $messages = Message::where('fk_group', $group->pk_group)->get();
+
+            return view('group.showGroup', ['idGrupo' => $group,'user'=>$user,'messages'=>$messages]);
         }
 
         return redirect()->route('dashboard')->with('error', 'You do not have access to the group');

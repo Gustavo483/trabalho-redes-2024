@@ -97,59 +97,79 @@
                 </div>
             </div>
 
-            <div class="py-12">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900">
-                            Usuários:
-                        </div>
-                        <div>
-                            @foreach($users as $user)
-                                <div class="mt-3 ms-5">
-                                    <p> <span class="font-bold">{{$user->name}}</span> - ({{$user->email}})</p>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="py-12">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900">
-                            Grupos Plataforma :
-                        </div>
-                        <div>
-                            @foreach($groups as $group)
-                                <div class="m-3 flex justify-between items-center invitation">
-                                    <div>
-                                        <p> Group : {{ $group->st_name }}</p>
-                                        <p>Admin : {{ $group->adminUse->name }}</p>
-                                        <p>Usuarios :
-                                         @foreach($group->users as $user)
-                                             <span>{{$user->name}},</span>
-                                         @endforeach
-                                        </p>
-
-                                    </div>
-                                    @if(! in_array($group->pk_group,$idGroups ) )
+            @if(count($users) > 0)
+                <div class="py-12">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="backgroundGroup overflow-hidden shadow-sm sm:rounded-lg p-10">
+                            <div class="p-6 titleGroup">
+                                Usuários:
+                            </div>
+                            <div class="flex justify-center items-center flex-wrap">
+                                @foreach($users as $user)
+                                    <div id="toast-interactive" class="m-5 w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400" role="alert">
                                         <div class="flex">
-                                            <a class=""
-                                               href="{{ route('sendRequesToGroup', ['group' => $group->pk_group])}}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                     fill="blue" class="bi bi-chat-quote-fill me-3" viewBox="0 0 16 16">
-                                                    <path d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M7.194 6.766a1.7 1.7 0 0 0-.227-.272 1.5 1.5 0 0 0-.469-.324l-.008-.004A1.8 1.8 0 0 0 5.734 6C4.776 6 4 6.746 4 7.667c0 .92.776 1.666 1.734 1.666.343 0 .662-.095.931-.26-.137.389-.39.804-.81 1.22a.405.405 0 0 0 .011.59c.173.16.447.155.614-.01 1.334-1.329 1.37-2.758.941-3.706a2.5 2.5 0 0 0-.227-.4zM11 9.073c-.136.389-.39.804-.81 1.22a.405.405 0 0 0 .012.59c.172.16.446.155.613-.01 1.334-1.329 1.37-2.758.942-3.706a2.5 2.5 0 0 0-.228-.4 1.7 1.7 0 0 0-.227-.273 1.5 1.5 0 0 0-.469-.324l-.008-.004A1.8 1.8 0 0 0 10.07 6c-.957 0-1.734.746-1.734 1.667 0 .92.777 1.666 1.734 1.666.343 0 .662-.095.931-.26z"/>
+                                            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:text-blue-300 dark:bg-blue-900">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="blue" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                                                 </svg>
-                                            </a>
+                                                <span class="sr-only">Refresh icon</span>
+                                            </div>
+                                            <div class="ms-3 text-sm font-normal">
+                                                <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">{{$user->name}}</span>
+                                                <div class="mb-2 text-sm font-normal">{{$user->email}}</div>
+                                            </div>
+
                                         </div>
-                                    @endif
-                                </div>
-                            @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
+            @if(count($groups) > 0)
+                <div class="py-12">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="backgroundGroup2 overflow-hidden shadow-sm sm:rounded-lg">
+                            <div class="p-6 titleGroup2">
+                                Grupos Plataforma :
+                            </div>
+                            <div class="flex justify-center items-center flex-wrap">
+                                @foreach($groups as $group)
+                                    <div id="toast-interactive" class="m-5 w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400" role="alert">
+                                        <div class="flex">
+                                            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:text-blue-300 dark:bg-blue-900">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="blue" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                                                </svg>
+                                            </div>
+                                            <div class="ms-3 text-sm font-normal">
+                                                <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">Group : {{ $group->st_name }}</span>
+                                                <div class="mb-2 text-sm font-normal">Admin : {{ $group->adminUse->name }} </div>
+                                                <div class="mb-2 text-sm font-normal">Usuários :
+                                                    @foreach($group->users as $user)
+                                                        <span>{{$user->name}},</span>
+                                                    @endforeach
+                                                </div>
+                                                <div class="grid grid-cols-2 gap-2">
+                                                    @if(! in_array($group->pk_group,$idGroups ) )
+                                                        <div class="flex">
+                                                            <a href="{{ route('sendRequesToGroup', ['group' => $group->pk_group])}}"   class="inline-flex justify-center w-full px-2 py-1.5 text-xs font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">Enviar solicitação</a>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
         </div>
     </div>
 

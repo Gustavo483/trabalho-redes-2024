@@ -19,7 +19,9 @@ class Message extends Model
         'fk_group',
         'st_message',
         'url_file_audio',
-        'fk_user_send_message'
+        'fk_user_send_message',
+        'st_file_type',
+        'st_name_file'
     ];
 
     public function group()

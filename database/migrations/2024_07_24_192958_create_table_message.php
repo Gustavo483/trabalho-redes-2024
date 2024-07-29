@@ -18,13 +18,14 @@ return new class extends Migration
             $table->id('pk_message');
             $table->longText('st_message');
             $table->string('url_file_audio')->nullable();
+            $table->string('st_file_type')->nullable();
+            $table->string('st_name_file')->nullable();
             $table->unsignedBigInteger('fk_group');
             $table->unsignedBigInteger('fk_user_send_message');
             $table->timestamps();
 
             $table->foreign('fk_group')->on((new Group())->getTable())->references('pk_group');
             $table->foreign('fk_user_send_message')->on((new User())->getTable())->references('id');
-
         });
     }
 
