@@ -22,6 +22,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
 ## Passo-a-passo - Instalação do projeto
+0. Requisitos : Ter em sua máquina php >= 8.2, COMPOSER e NPM. 
 1. Em sua pasta raiz, clone o arquivo do projeto usando **git clone** [https://github.com/Gustavo483/BackEndProjetoUnb-BD.git](https://github.com/Gustavo483/trabalho-redes-2024.git)
 2. Abra a pasta do projeto em seu terminal e execute o comando:
 
