@@ -1,60 +1,10 @@
 <x-app-layout>
     <div class="container__conversa">
         <section class = "conversa">
-            <div class="top__bar fex justify-between">
+            <div class="top__bar">
                 <span class=>{{$idGrupo->st_name}}</span>
-                @if($idGrupo->fk_user_admin === $user->id)
-                    <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                        Adicionar participante
-                    </button>
-                @endif
-                @if($idGrupo->fk_user_admin !== $user->id)
-                    <a class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                       href="{{ route('outGroup', ['user' => $user, 'group'=>$idGrupo]) }}" >Sair do grupo</a>
-                @endif
             </div>
-            @if($idGrupo->fk_user_admin === $user->id)
-                <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative p-4 w-full max-w-2xl max-h-full">
-                    <div class="relative bg-white rounded-lg shadow-md dark:bg-gray-800">
-                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                Novo grupo
-                            </h3>
-                            <button id="closeModal" type="button" class="text-gray-500 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                </svg>
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                        </div>
-
-                        <div class="p-4 md:p-5 space-y-4">
-                            <form method="post" action="{{ route('newInvitation', ['user' => $user, 'group'=>$idGrupo]) }}">
-                                @csrf
-
-                                <label for="user_ids" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">Send invitation to:</label>
-
-                                @foreach($platformUsers as $platformUser)
-                                    @if($platformUser->id !== $user->id)
-                                        <div class="flex items-center mb-4">
-                                            <input name="user_ids[]" id="user{{ $platformUser->id }}" type="checkbox" value="{{ $platformUser->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="user{{ $platformUser->id }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $platformUser->name }}</label>
-                                        </div>
-                                    @endif
-                                @endforeach
-
-                                <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                    <button id="close" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
-                                    <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Decline</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-                @php
+            @php
                 function formatDate($isoDate) {
                     $date = new DateTime($isoDate);
                     return $date->format('d/m/Y H:i');

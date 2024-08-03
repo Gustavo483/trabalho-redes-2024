@@ -50,7 +50,6 @@ class GroupController extends Controller
                 $userIdsWithRequestType2[] = [$nameUser[0], $idUser[0], $group->st_name, $group->pk_group];
             }
         }
-
         return view('dashboard', [
             'groups' => $activeGroups,
             'user' => $user,
@@ -76,13 +75,24 @@ class GroupController extends Controller
 
     public function show(Group $group)
     {
+
+        $usersGroup = [];
+
+        foreach ($group->users as $usersBelongsGroup) {
+            array_push($usersGroup, $usersBelongsGroup->id);
+        }
+
         $user = User::where('id', Auth::user()->id)->first();
+
+
+        $platformUsers = User::whereNotIn('id',$usersGroup)->get();
 
         if ($user->groups->contains($group->pk_group)) {
 
             $messages = Message::where('fk_group', $group->pk_group)->get();
 
-            return view('group.showGroup', ['idGrupo' => $group,'user'=>$user,'messages'=>$messages]);
+            return view('group.showGroup',
+                ['idGrupo' => $group, 'user' => $user, 'messages' => $messages, 'platformUsers' => $platformUsers]);
         }
 
         return redirect()->route('dashboard')->with('error', 'You do not have access to the group');
@@ -141,6 +151,28 @@ class GroupController extends Controller
 
         return redirect()->back()->with('success', 'Group created and invitation sent to selected users.');
     }
+
+    public function newInvitation(User $user,Group $group ,Request $request)
+    {
+        if ($group->fk_user_admin === $user->id){
+            $userSyncData = array_fill_keys($request->user_ids, ['bl_accepted' => false]);
+            $group->users()->sync($userSyncData);
+
+            return redirect()->back()->with('success', 'Invitation sent to selected users.');
+        }
+
+        return redirect()->back()->with('error', 'You do not have access');
+    }
+
+    public function outGroup(User $user,Group $group ,Request $request)
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+
+        $user->groups()->detach($group->pk_group);
+
+        return redirect()->route('dashboard')->with('success', 'You left the group');
+    }
+
 
     public function sendRequesToGroup(Group $group)
     {
