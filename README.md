@@ -1,7 +1,7 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
@@ -21,46 +21,40 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Passo-a-passo - Instalação do projeto
-0. Requisitos : Ter em sua máquina php >= 8.2, COMPOSER e NPM. 
-1. Em sua pasta raiz, clone o arquivo do projeto usando **git clone** [https://github.com/Gustavo483/BackEndProjetoUnb-BD.git](https://github.com/Gustavo483/trabalho-redes-2024.git)
-2. Abra a pasta do projeto em seu terminal e execute o comando:
+## Learning Laravel
 
-```sh
-composer install
-```
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-4. Na pasta do projeto, crie um arquivo `.env`, no escopo do projeto existe um arquivo chamado `.env.example` onde basta renomea-lo para `.env`. Após isso gere a chave para este projeto usando o comando:
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-```sh
-php artisan key:generate
-```
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-5. Em seguida, compile os dados de CSS e JS usando os comando:
+## Laravel Sponsors
 
-```sh
-npm install && npm run dev
-```
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-6. Nesse repositório existe um arquivo chamado EstruturaBancoTrabalhoBD.sql use-o para criar seu banco de dados no SGBD de sua escolha. No arquivo `.env` que foi criado, estabeleça a conexão com seu banco de dados:
+### Premium Partners
 
-```sh
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=NAMEDB
-DB_USERNAME=DB_USERNAME
-DB_PASSWORD=DB_PASSWORD
-```
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
 
-Por último, execute os comandos abaixo para servir a aplicação. OBS : Será necessário abrir um prompt de comando para cada comando.
+## Contributing
 
-```sh
-php artisan serve
-```
-```sh
-php artisan queue:work
-```
-```sh
-php artisan reverb:start
-```
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+
+## Code of Conduct
+
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+## Security Vulnerabilities
