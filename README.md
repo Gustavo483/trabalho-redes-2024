@@ -22,7 +22,6 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
 ## Passo-a-passo - Instalação do projeto
-0. Esse repositório é responsável por gerir o backend da aplicação por meio de API. Ele está em conjunto com o projeto https://github.com/Gustavo483/FrontProjetoUnb-BD onde este consome a API e tem uma interface com o usuário. 
 1. Em sua pasta raiz, clone o arquivo do projeto usando **git clone** https://github.com/Gustavo483/BackEndProjetoUnb-BD.git
 2. Abra a pasta do projeto em seu terminal e execute o comando:
 
