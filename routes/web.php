@@ -21,18 +21,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/show/{group}', 'show')->name('show');
         Route::post('/sendMessege/{group}', 'sendMessege')->name('sendMessege');
         Route::post('/newGroup/{user}', 'newGroup')->name('newGroup');
-
+        Route::post('/newInvitation/{user}/{group}', 'newInvitation')->name('newInvitation');
+        Route::get('/outGroup/{user}/{group}', 'outGroup')->name('outGroup');
         Route::get('/rejectInvitation{group}', 'rejectInvitation')->name('rejectInvitation');
         Route::get('/acceptInvite{group}', 'acceptInvite')->name('acceptInvite');
-
         Route::get('/rejectInvitationAdmin/{group}/{user}', 'rejectInvitationAdmin')->name('rejectInvitationAdmin');
         Route::get('/acceptInviteAdmin/{group}/{user}', 'acceptInviteAdmin')->name('acceptInviteAdmin');
-
         Route::get('/sendRequesToGroup/{group}', 'sendRequesToGroup')->name('sendRequesToGroup');
-
-
         Route::get('/showGroups', 'showGroups')->name('showGroups');
-
     });
 });
 
