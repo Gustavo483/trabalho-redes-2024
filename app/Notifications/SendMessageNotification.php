@@ -6,18 +6,20 @@ use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Notification;
 
 class SendMessageNotification extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
     public $message;
+
     public $group;
+
     public $user;
 
-    public function __construct($message,$group,$user)
+    public function __construct($message, $group, $user)
     {
         $this->message = $message;
         $this->group = $group;
@@ -38,7 +40,7 @@ class SendMessageNotification extends Notification implements ShouldBroadcast
             'st_file_type' => $this->message['file_type'] ?? null,
             'st_name_file' => $this->message['name_file'] ?? null,
             'int_message_type' => 1,
-            'fk_user_send_message' => $this->user
+            'fk_user_send_message' => $this->user,
         ]);
 
         return new BroadcastMessage([
@@ -52,7 +54,7 @@ class SendMessageNotification extends Notification implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('group.' . $this->group->pk_group);
+        return new Channel('group.'.$this->group->pk_group);
     }
 
     public function broadcastAs()

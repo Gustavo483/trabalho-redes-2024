@@ -8,7 +8,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -19,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(GroupController::class)->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::get('/show/{group}', 'show')->name('show');
-        Route::post('/sendMessege/{group}', 'sendMessege')->name('sendMessege');
+        Route::post('/sendMessage/{group}', 'sendMessage')->name('sendMessage');
         Route::post('/newGroup/{user}', 'newGroup')->name('newGroup');
         Route::post('/newInvitation/{user}/{group}', 'newInvitation')->name('newInvitation');
         Route::get('/outGroup/{user}/{group}', 'outGroup')->name('outGroup');

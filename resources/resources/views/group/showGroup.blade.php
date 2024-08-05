@@ -54,7 +54,7 @@
 
             </section>
 
-            <form class="campo__mensagem" id="messageForm" method="post" action="{{ route('sendMessege', ['group' => $idGrupo->pk_group]) }}" enctype="multipart/form-data">
+            <form class="campo__mensagem" id="messageForm" method="post" action="{{ route('sendMessage', ['group' => $idGrupo->pk_group]) }}" enctype="multipart/form-data">
                 @csrf
 
                 <input style="border: none;padding: 15px;border-radius: 8px;flex-grow: 1;background-color: #e9e9e9;outline: none; color: #191919; font-size: 1rem;" type="text" id="messege" name="st_message" placeholder="Digite uma mensagem">

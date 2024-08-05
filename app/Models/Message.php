@@ -21,16 +21,16 @@ class Message extends Model
         'url_file_audio',
         'fk_user_send_message',
         'st_file_type',
-        'st_name_file'
+        'st_name_file',
     ];
 
     public function group()
     {
-        return $this->belongsTo(Group::class,'fk_grupo','pk_grupo');
+        return $this->belongsTo(Group::class, 'fk_grupo', 'pk_grupo');
     }
 
     public function userSendMessage()
     {
-        return $this->belongsTo(User::class,'fk_user_send_message','id');
+        return $this->belongsTo(User::class, 'fk_user_send_message', 'id');
     }
 }

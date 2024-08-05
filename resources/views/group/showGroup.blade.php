@@ -104,7 +104,7 @@
 
             </section>
 
-            <form class="campo__mensagem" id="messageForm" method="post" action="{{ route('sendMessege', ['group' => $idGrupo->pk_group]) }}" enctype="multipart/form-data">
+            <form class="campo__mensagem" id="messageForm" method="post" action="{{ route('sendMessage', ['group' => $idGrupo->pk_group]) }}" enctype="multipart/form-data">
                 @csrf
 
                 <input style="border: none;padding: 15px;border-radius: 8px;flex-grow: 1;background-color: #e9e9e9;outline: none; color: #191919; font-size: 1rem;" type="text" id="messege" name="st_message" placeholder="Digite uma mensagem">
@@ -160,11 +160,10 @@
 
         Echo.channel('group.' + groupId)
             .listen('.message.sent', (e) => {
-                console.log(e)
                 function formatDate(isoDate) {
                     const date = new Date(isoDate);
                     const day = String(date.getDate()).padStart(2, '0');
-                    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
                     const year = date.getFullYear();
                     const hours = String(date.getHours()).padStart(2, '0');
                     const minutes = String(date.getMinutes()).padStart(2, '0');

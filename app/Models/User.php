@@ -49,6 +49,6 @@ class User extends Authenticatable
 
     public function groups()
     {
-        return $this->belongsToMany(Group::class, 'grupo_user', 'user_id','grupo_id')->withPivot('bl_accepted','int_request_type')->withTimestamps();
+        return $this->belongsToMany(Group::class, 'grupo_user', 'user_id', 'grupo_id')->withPivot('bl_accepted', 'int_request_type')->withTimestamps();
     }
 }

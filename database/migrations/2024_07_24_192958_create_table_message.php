@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create((new Message())->getTable(), function (Blueprint $table) {
+        Schema::create((new Message)->getTable(), function (Blueprint $table) {
             $table->id('pk_message');
             $table->longText('st_message');
             $table->string('url_file_audio')->nullable();
@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedBigInteger('fk_user_send_message');
             $table->timestamps();
 
-            $table->foreign('fk_group')->on((new Group())->getTable())->references('pk_group');
-            $table->foreign('fk_user_send_message')->on((new User())->getTable())->references('id');
+            $table->foreign('fk_group')->on((new Group)->getTable())->references('pk_group');
+            $table->foreign('fk_user_send_message')->on((new User)->getTable())->references('id');
         });
     }
 
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists((new Message())->getTable());
+        Schema::dropIfExists((new Message)->getTable());
     }
 };

@@ -25,7 +25,7 @@ class Group extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'grupo_user', 'grupo_id', 'user_id')->withPivot('bl_accepted','int_request_type')->withTimestamps();
+        return $this->belongsToMany(User::class, 'grupo_user', 'grupo_id', 'user_id')->withPivot('bl_accepted', 'int_request_type')->withTimestamps();
     }
 
     public function adminUse()

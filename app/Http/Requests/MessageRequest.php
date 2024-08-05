@@ -17,7 +17,7 @@ class MessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'st_message' => ['required','string']
+            'st_message' => ['required', 'string'],
         ];
     }
 }
